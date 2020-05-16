@@ -1,2 +1,2 @@
 # thefort-comz-bot
-F3 TheFort Chat Bot for Slack
+F3 TheFort Comz Bot for Slack
