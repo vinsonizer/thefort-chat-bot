@@ -13,8 +13,8 @@ functions:
     description: Comz Bot Backend
     environment:
       BOT_NAME        : ${self:custom.botName}
-      VERIFICATION_TOKEN: ${ssm:slack_verification_token}
-      BOT_TOKEN         : ${ssm:slack_bot_token}
+      VERIFICATION_TOKEN: ${ssm:slack_verification_token~true}
+      BOT_TOKEN         : ${ssm:slack_bot_token~true}
     exclude: 
       - package-lock.json
     optimize: true

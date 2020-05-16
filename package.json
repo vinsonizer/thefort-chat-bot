@@ -12,6 +12,7 @@
     "slack": "^11.0.2"
   },
   "devDependencies": {
+    "eslint": "^7.0.0",
     "serverless-plugin-optimize": "^4.1.4-rc.1"
   },
   "repository": {
