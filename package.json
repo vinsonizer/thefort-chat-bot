@@ -8,7 +8,7 @@
   "author": "Jason Vinson <vinsonizer@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.678.0",
+    "aws-sdk": "^2.814.0",
     "slack": "^11.0.2"
   },
   "devDependencies": {
