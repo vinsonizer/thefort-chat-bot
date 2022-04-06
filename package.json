@@ -3,17 +3,15 @@
   "version": "1.0.0",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "author": "Jason Vinson <vinsonizer@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.814.0",
-    "slack": "^11.0.2"
-  },
-  "devDependencies": {
-    "eslint": "^7.0.0",
-    "serverless-plugin-optimize": "^4.1.4-rc.1"
+    "@slack/bolt": "^3.11.0",
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15"
   },
   "repository": {
     "type": "git",
