@@ -18,12 +18,37 @@ app.command("/q", async ({ command, ack, say }) => {
   }
 });
 
-app.message("/hey/", async ({ command, say }) => {
+app.message(/hey/, async ({ message, say }) => {
   try {
-    say("it works");
+    await say({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `Hey there <@${message.user}>!`,
+          },
+          accessory: {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Click Me",
+            },
+            action_id: "button_click",
+          },
+        },
+      ],
+      text: `Hey there <@${message.user}>!`,
+    });
   } catch (error) {
     console.error(error);
   }
+});
+
+app.action("button_click", async ({ body, ack, say }) => {
+  // Acknowledge the action
+  await ack();
+  await say(`<@${body.user.id}> clicked the button`);
 });
 
 (async () => {
