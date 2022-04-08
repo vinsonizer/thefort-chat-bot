@@ -52,8 +52,8 @@ app.action("button_click", async ({ body, ack, say }) => {
 });
 
 (async () => {
-  const port = 3000;
+  const port = process.env.PORT || 3000;
   // Start your app
-  await app.start(process.env.PORT || port);
+  await app.start(port);
   console.log(`⚡️ Slack Bolt app is running on port ${port}!`);
 })();
