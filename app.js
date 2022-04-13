@@ -11,12 +11,83 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   socketMode: true,
   appToken: process.env.APP_TOKEN,
-  logLevel: LogLevel.INFO,
+  logLevel: LogLevel.DEBUG,
 });
 
 const token = process.env.SLACK_BOT_TOKEN;
 
 const web = new WebClient(token);
+
+// Listen for users opening your App Home
+app.event("app_home_opened", async ({ event, client, logger }) => {
+  try {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const schedule = await q.getTomorrowsAOs(); // FIXME: not hardcoded date
+    var qList = schedule
+      .map((ao) => {
+        return `*${ao.location}:* ${ao.q}`;
+      })
+      .join("\n");
+    // Call views.publish with the built-in client
+    const result = await client.views.publish({
+      // Use the user ID associated with the event
+      user_id: event.user,
+      view: {
+        // Home tabs must be enabled in your app configuration page under "App Home"
+        type: "home",
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `*Welcome home, <@${event.user}> :house:*`,
+            },
+          },
+          {
+            type: "divider",
+          },
+          {
+            type: "input",
+            element: {
+              type: "datepicker",
+              initial_date: `${tomorrow.getFullYear()}-${
+                tomorrow.getMonth() + 1
+              }-${tomorrow.getDate()}`,
+              placeholder: {
+                type: "plain_text",
+                text: "Select a date",
+                emoji: true,
+              },
+              action_id: "datepicker-action",
+            },
+            label: {
+              type: "plain_text",
+              text: "Plan your Post:",
+              emoji: true,
+            },
+          },
+          {
+            type: "divider",
+          },
+          {
+            type: "section",
+            fields: [
+              {
+                type: "mrkdwn",
+                text: `*Q's on deck:*\n ${qList}`,
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    logger.info(result);
+  } catch (error) {
+    logger.error(error);
+  }
+});
 
 app.command("/q", async ({ command, ack, say }) => {
   try {
