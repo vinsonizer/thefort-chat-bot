@@ -24,7 +24,7 @@ app.event("app_home_opened", async ({ event, client, logger }) => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const schedule = await q.getTomorrowsAOs(); // FIXME: not hardcoded date
-    var qList = schedule
+    const qList = schedule
       .map((ao) => {
         return `*${ao.location}:* ${ao.q}`;
       })
